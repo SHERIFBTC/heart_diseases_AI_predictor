@@ -1,9 +1,7 @@
 [README.md](https://github.com/user-attachments/files/28449876/README.md)
 # heart_diseases_AI_predictor# Heart Disease Decision Tree Node UI
 
-An interactive, premium web application dashboard that serves as a visual diagnostic simulator and real-time path explorer for a trained Decision Tree Classifier. 
-
-The application utilizes a Python Flask backend to run model inference and standard MinMax feature scaling, paired with an interactive frontend powered by D3.js that visualizes the nodes of the decision tree and animates the exact decision path traversed for any set of inputs.
+Clinical AI Decision Support System: Heart Disease Diagnostic Simulator Developed a clinical decision support system designed to bridge the gap between machine learning and healthcare diagnostics by enhancing model interpretability. Built a Python Flask REST API backend to process patient parameters, aligning raw values with a trained Decision Tree Classifier through dynamic MinMaxScaler normalization. Engineered a real-time visual explorer using D3.js and CSS3 to map patient data onto the clinical decision pathway. By highlighting the exact diagnostic route from root node to leaf, the system provides clinicians with transparent, step-by-step logic behind AI predictions (e.g., vessel colored, thalassemia type, and heart rate thresholds). This enhances clinical decision-making, validates model safety, and establishes the interpretability required for clinical adoption.
 
 ---
 
