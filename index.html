@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heart Disease Decision Tree Explorer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <!-- D3.js for tree visualization -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Main Header -->
+        <header class="app-header">
+            <div class="header-title-wrapper">
+                <div class="pulse-indicator"></div>
+                <div>
+                    <h1>Heart Disease Decision Tree Node UI</h1>
+                    <p class="subtitle">Visual Diagnostic Simulator & Decision Tree Interactive Path Explorer</p>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button id="btn-load-samples" class="btn secondary-btn">
+                    <i data-lucide="database"></i> Load Dataset Samples
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Layout Grid -->
+        <main class="app-layout">
+            <!-- Left Sidebar: Patient Inputs -->
+            <section class="panel-card input-panel">
+                <div class="panel-header">
+                    <i data-lucide="sliders"></i>
+                    <h2>Patient Parameters</h2>
+                </div>
+                
+                <!-- Quick Sample Selector -->
+                <div class="sample-section">
+                    <span class="section-label">Dataset Quick Loaders:</span>
+                    <div id="samples-container" class="samples-grid">
+                        <span class="loading-placeholder">Click 'Load Dataset Samples' to populate...</span>
+                    </div>
+                </div>
+
+                <hr class="divider">
+
+                <!-- Dynamic Form -->
+                <form id="prediction-form" class="inputs-form">
+                    <div id="features-form-container" class="form-scroll-area">
+                        <div class="loading-placeholder">Loading patient features metadata...</div>
+                    </div>
+                    <button type="submit" class="btn primary-btn btn-predict">
+                        <span class="btn-text">Analyze Decision Path</span>
+                        <i data-lucide="activity" class="activity-pulse"></i>
+                    </button>
+                </form>
+            </section>
+
+            <!-- Center Viewport: Decision Tree Visualizer -->
+            <section class="panel-card visualization-panel">
+                <div class="panel-header viz-header">
+                    <div class="title-with-icon">
+                        <i data-lucide="git-branch" class="rotate-90"></i>
+                        <h2>Decision Flow Chart</h2>
+                    </div>
+                    <div class="viz-controls">
+                        <button id="btn-zoom-in" class="ctrl-btn" title="Zoom In"><i data-lucide="zoom-in"></i></button>
+                        <button id="btn-zoom-out" class="ctrl-btn" title="Zoom Out"><i data-lucide="zoom-out"></i></button>
+                        <button id="btn-zoom-reset" class="ctrl-btn" title="Reset View"><i data-lucide="maximize-2"></i></button>
+                    </div>
+                </div>
+                
+                <div class="viz-container">
+                    <div class="viz-tooltip" id="tree-tooltip"></div>
+                    <svg id="tree-svg"></svg>
+                </div>
+
+                <div class="viz-legend">
+                    <div class="legend-item"><span class="legend-dot root-dot"></span><span>Root / Decision Node</span></div>
+                    <div class="legend-item"><span class="legend-dot path-dot"></span><span>Active Traversed Path</span></div>
+                    <div class="legend-item"><span class="legend-dot normal-dot"></span><span>Healthy Leaf</span></div>
+                    <div class="legend-item"><span class="legend-dot risk-dot"></span><span>Heart Disease Leaf</span></div>
+                </div>
+            </section>
+
+            <!-- Right Sidebar: Results & Path Log -->
+            <section class="panel-card results-panel">
+                <div class="panel-header">
+                    <i data-lucide="heart-pulse"></i>
+                    <h2>Diagnostic Results</h2>
+                </div>
+
+                <!-- Prediction Results -->
+                <div id="prediction-output-card" class="result-placeholder-state">
+                    <!-- Default placeholder state -->
+                    <div class="placeholder-content">
+                        <i data-lucide="activity" class="large-placeholder-icon"></i>
+                        <p>Adjust parameters and click "Analyze Decision Path" to run the model simulator.</p>
+                    </div>
+
+                    <!-- Prediction active states (populated by JS) -->
+                    <div class="results-content hidden">
+                        <div class="gauge-wrapper">
+                            <svg class="radial-gauge" viewBox="0 0 100 100">
+                                <circle class="gauge-bg" cx="50" cy="50" r="40"></circle>
+                                <circle id="gauge-progress" class="gauge-progress" cx="50" cy="50" r="40"></circle>
+                                <text id="gauge-percentage" x="50" y="55" class="gauge-text">0%</text>
+                            </svg>
+                            <span class="gauge-label">Heart Disease Probability</span>
+                        </div>
+
+                        <div id="diagnosis-card" class="diagnosis-status-card">
+                            <i id="diagnosis-icon" data-lucide="shield-check"></i>
+                            <div class="diagnosis-text">
+                                <h3 id="diagnosis-title">Negative</h3>
+                                <p id="diagnosis-description">Minimal indicators of heart disease detected.</p>
+                            </div>
+                        </div>
+
+                        <div class="decision-path-section">
+                            <h3>Decision Path Steps</h3>
+                            <div id="decision-steps-list" class="steps-timeline">
+                                <!-- Populated dynamically -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Initialize Lucide icons -->
+    <script>
+        lucide.createIcons();
+    </script>
+    <script src="app.js"></script>
+</body>
+</html>
